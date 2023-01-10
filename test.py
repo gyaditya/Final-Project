@@ -81,7 +81,7 @@ while running:
         # Handle player 1 movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                 player1.vy = -5
+                player1.vy = -5
             elif event.key == pygame.K_s:
                 player1.vy = 5
             elif event.key == pygame.K_a:
@@ -129,28 +129,28 @@ while running:
     # Update the positions of the players
     player1.move()
     player2.move()
-    
+
     # Keep the players within their half of the screen
     player1.check_bounds(window_size[1])
     player2.check_bounds(window_size[1])
-    
+
     # Update the positions of the bullets
     player1.update_bullets()
     player2.update_bullets()
-    
+
     # Check for collisions between bullets and players
     player1.check_collisions(player2)
     player2.check_collisions(player1)
-    
+
     # Clear the screen
     screen.fill((255, 255, 255))
-    
+
     # Draw the line separating the two halves of the screen
     pygame.draw.line(screen, line_color, (window_size[0] / 2, 0), (window_size[0] / 2, window_size[1]), line_width)
-    
-    # Draw the players
-    pygame.draw.rect(screen, player1.color, (player1.x, player1.y,
-     player1.width, player1pygame.draw.rect(screen, player2.color, (player2.x, player2.y, player2.width, player2.height))
+
+# Draw the players
+    pygame.draw.rect(screen, player1.color, (player1.x, player1.y, player1.width, player1.height))
+    pygame.draw.rect(screen, player2.color, (player2.x, player2.y, player2.width, player2.height))
     
     # Draw the bullets
     for bullet in player1.bullets:
