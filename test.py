@@ -77,7 +77,7 @@ window_size = (800, 600)
 screen = pygame.display.set_mode(window_size)
 screen_width, screen_height = screen.get_size()
 # Set the title of the window
-pygame.display.set_caption("Two Player Game")
+pygame.display.set_caption("Space Shooter")
 
 # Define the colors
 player1_color = (255, 0, 0)
@@ -91,8 +91,8 @@ line_width = 5
 clock = pygame.time.Clock()
 
 # Create the players
-player1 = Player(50, 250, player1_color, {"up": pygame.K_w, "down": pygame.K_s, "left": pygame.K_a, "right": pygame.K_d, "shoot": pygame.K_SPACE})
-player2 = Player(750, 250, player2_color, {"up": pygame.K_UP, "down": pygame.K_DOWN, "left": pygame.K_LEFT, "right": pygame.K_RIGHT, "shoot": pygame.K_k})
+player1 = Player(50, 250, player1_color, {"up": pygame.K_w, "down": pygame.K_s, "left": pygame.K_a, "right": pygame.K_d, "shoot": pygame.K_LCTRL})
+player2 = Player(700, 250, player2_color, {"up": pygame.K_UP, "down": pygame.K_DOWN, "left": pygame.K_LEFT, "right": pygame.K_RIGHT, "shoot": pygame.K_RCTRL})
 
 # Create the font
 font = pygame.font.Font(None, 30)
@@ -148,7 +148,14 @@ while running:
     player2.check_collisions(player1)
     
     # Draw the game elements
-    screen.fill((0, 0, 0))
+
+# Load the background gif and set it to the size of the screen
+    bg = pygame.image.load("background.gif")
+    bg = pygame.transform.scale(bg, window_size)
+
+    # Set the background
+    screen.blit(bg, (0, 0))
+
     pygame.draw.line(screen, line_color, (window_size[0] / 2, 0), (window_size[0] / 2, window_size[1]), line_width)
     pygame.draw.rect(screen, player1.color, (player1.x, player1.y, player1.width, player1.height))
     pygame.draw.rect(screen, player2.color, (player2.x, player2.y, player2.width, player2.height))
