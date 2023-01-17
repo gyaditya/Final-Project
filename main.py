@@ -77,7 +77,7 @@ window_size = (800, 600)
 screen = pygame.display.set_mode(window_size)
 screen_width, screen_height = screen.get_size()
 # Set the title of the window
-pygame.display.set_caption("Two Player Game")
+pygame.display.set_caption("Space Shooter")
 
 # Define the colors
 player1_color = (255, 0, 0)
@@ -91,8 +91,8 @@ line_width = 5
 clock = pygame.time.Clock()
 
 # Create the players
-player1 = Player(50, 250, player1_color, {"up": pygame.K_w, "down": pygame.K_s, "left": pygame.K_a, "right": pygame.K_d, "shoot": pygame.K_SPACE})
-player2 = Player(750, 250, player2_color, {"up": pygame.K_UP, "down": pygame.K_DOWN, "left": pygame.K_LEFT, "right": pygame.K_RIGHT, "shoot": pygame.K_k})
+player1 = Player(50, 250, player1_color, {"up": pygame.K_w, "down": pygame.K_s, "left": pygame.K_a, "right": pygame.K_d, "shoot": pygame.K_LCTRL})
+player2 = Player(700, 250, player2_color, {"up": pygame.K_UP, "down": pygame.K_DOWN, "left": pygame.K_LEFT, "right": pygame.K_RIGHT, "shoot": pygame.K_RCTRL})
 
 # Create the font
 font = pygame.font.Font(None, 30)
@@ -148,7 +148,14 @@ while running:
     player2.check_collisions(player1)
     
     # Draw the game elements
-    screen.fill((0, 0, 0))
+
+# Load the background gif and set it to the size of the screen
+    bg = pygame.image.load("background.jpg")
+    bg = pygame.transform.scale(bg, window_size)
+
+    # Set the background
+    screen.blit(bg, (0, 0))
+
     pygame.draw.line(screen, line_color, (window_size[0] / 2, 0), (window_size[0] / 2, window_size[1]), line_width)
     pygame.draw.rect(screen, player1.color, (player1.x, player1.y, player1.width, player1.height))
     pygame.draw.rect(screen, player2.color, (player2.x, player2.y, player2.width, player2.height))
@@ -157,12 +164,15 @@ while running:
     for bullet in player2.bullets:
         pygame.draw.rect(screen, (0, 0, 255), bullet)
     
+    #Display the Health of the players
+    player1_health_text = font.render("Player 1 Health: " + str(player1.health), True, (255, 0, 0))
+    player2_health_text = font.render("Player 2 Health: " + str(player2.health), True, (255, 0, 0))
+    screen.blit(player1_health_text, (10, 10))
+    screen.blit(player2_health_text, (600, 10))
     # Update the display
     pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()
-
-
 
 
