@@ -1,6 +1,7 @@
 import pygame
 
 class Player:
+    #Initalize
     def __init__(self, x, y, color, controls):
         self.x = x
         self.y = y
@@ -13,7 +14,8 @@ class Player:
         self.controls = controls
         self.health = 10
         self.shooting = False
-
+    
+    #Move the player and Check the border
     def move(self, screen_width, screen_height, line_width):
         self.x += self.vx
         self.y += self.vy
@@ -33,19 +35,20 @@ class Player:
         elif self.y + self.height > screen_height:
             self.y = screen_height - self.height
 
-
+    #Make the bullets
     def shoot(self):
         if self.color == player1_color:
             self.bullets.append(pygame.Rect(self.x + self.width, self.y + self.height/2, 5, 5))
         else:
             self.bullets.append(pygame.Rect(self.x, self.y + self.height/2, 5, 5))
 
-
+    #Move the bullets
     def update_bullets(self):
         for bullet in self.bullets:
             bullet.x += 10 if self.color == player1_color else -10
         self.bullets = [b for b in self.bullets if b.x >= 0 and b.x <= screen_width ]
-
+    
+    #Collison Detection and Determine the winner
     def check_collisions(self, other_player):
         for bullet in self.bullets:
             if bullet.colliderect(other_player.x, other_player.y, other_player.width, other_player.height):
